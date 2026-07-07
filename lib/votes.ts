@@ -93,80 +93,84 @@ async function recordVote({
   const field = stageVoteField(stage ?? config.currentStage);
 
   try {
-    const result = await prisma.$transaction(async (tx) => {
-      if (voteMethod === "paystack") {
-        if (!reference) {
-          throw new VoteError("Payment reference is required", 400);
+    const result = await prisma.$transaction(
+      async (tx) => {
+        if (voteMethod === "paystack") {
+          if (!reference) {
+            throw new VoteError("Payment reference is required", 400);
+          }
+
+          const { count } = await tx.paystackTransaction.updateMany({
+            where: { reference, status: "pending" },
+            data: {
+              status: "processed",
+              processedAt: new Date(),
+            },
+          });
+
+          if (count === 0) {
+            return null;
+          }
         }
 
-        const { count } = await tx.paystackTransaction.updateMany({
-          where: { reference, status: "pending" },
-          data: {
-            status: "processed",
-            processedAt: new Date(),
+        const current = await tx.contestant.findUnique({
+          where: { contestantId, disabled: false },
+          select: {
+            stage1vote: true,
+            stage2vote: true,
+            stage3vote: true,
+            firstName: true,
+            lastName: true,
           },
         });
 
-        if (count === 0) {
-          return null;
+        if (!current) {
+          throw new VoteError("Contestant not found", 404);
         }
-      }
 
-      const current = await tx.contestant.findUnique({
-        where: { contestantId, disabled: false },
-        select: {
-          stage1vote: true,
-          stage2vote: true,
-          stage3vote: true,
-          firstName: true,
-          lastName: true,
-        },
-      });
+        const currentVotes = current[field] ?? 0;
+        const newVotes = currentVotes + votesToAdd;
 
-      if (!current) {
-        throw new VoteError("Contestant not found", 404);
-      }
-
-      const currentVotes = current[field] ?? 0;
-      const newVotes = currentVotes + votesToAdd;
-
-      const displaced = await tx.contestant.findMany({
-        where: {
-          [field]: { gt: currentVotes, lte: newVotes },
-          disabled: false,
-          contestantId: { not: contestantId },
-        },
-        select: { firstName: true, whatsapp: true, parent: true },
-      });
-
-      const contestant = await tx.contestant.update({
-        where: { contestantId, disabled: false },
-        data: {
-          [field]: { increment: votesToAdd },
-          voteLogs: {
-            create: {
-              voterName: voterName || "Anonymous",
-              numberOfVotes: votesToAdd,
-              amount: amountPaid,
-              voteMethod,
-              keepAnonymous: keepAnonymous ?? false,
+        const contestant = await tx.contestant.update({
+          where: { contestantId, disabled: false },
+          data: {
+            [field]: { increment: votesToAdd },
+            voteLogs: {
+              create: {
+                voterName: voterName || "Anonymous",
+                numberOfVotes: votesToAdd,
+                amount: amountPaid,
+                voteMethod,
+                keepAnonymous: keepAnonymous ?? false,
+              },
             },
           },
-        },
-      });
+        });
 
-      return {
-        contestant,
-        displaced,
-        overtakingContestantName: `${current.firstName} ${current.lastName}`,
-      };
-    });
+        return {
+          contestant,
+          currentVotes,
+          newVotes,
+          overtakingContestantName: `${current.firstName} ${current.lastName}`,
+        };
+      },
+      { timeout: 15000, maxWait: 10000 },
+    );
 
     if (!result) {
       return { alreadyProcessed: true };
     }
 
-    await notifyDisplacedContestants(result.displaced, result.overtakingContestantName);
+    const displaced = await prisma.contestant.findMany({
+      where: {
+        [field]: { gt: result.currentVotes, lte: result.newVotes },
+        disabled: false,
+        contestantId: { not: contestantId },
+      },
+      select: { firstName: true, whatsapp: true, parent: true },
+    });
+
+    await notifyDisplacedContestants(displaced, result.overtakingContestantName);
 
     return { contestant: result.contestant };
   } catch (error) {

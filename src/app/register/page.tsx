@@ -43,10 +43,10 @@ interface IFormInput {
 }
 
 const perks = [
-  { emoji: "🏆", text: "₦500,000 Grand Prize" },
+  { emoji: "🏆", text: "₦1,000,000 Grand Prize" },
   { emoji: "🎓", text: "3-Year Scholarship" },
   { emoji: "👑", text: "Future Star Title" },
-  { emoji: "🌟", text: "Ages 0–10 Welcome" },
+  { emoji: "🌟", text: "Ages 0–8 Welcome" },
 ];
 
 export default function RegistrationForm() {

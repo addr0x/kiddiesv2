@@ -97,7 +97,7 @@ export default function CampaignPoster() {
               className="flex flex-col items-center justify-center border-4 border-black bg-white font-black leading-tight"
               style={{ width: 96, height: 58, borderRadius: "50%", boxShadow: "3px 3px 0px #111" }}>
               <span className="text-[0.52rem] tracking-widest text-gray-500 uppercase font-bold">AGE:</span>
-              <span className="text-[1.3rem] text-black leading-none">0–10</span>
+              <span className="text-[1.3rem] text-black leading-none">0–8</span>
             </div>
 
             <div className="absolute -bottom-1 -left-1 opacity-80">
@@ -121,7 +121,7 @@ export default function CampaignPoster() {
                 ₦1,000,000
               </p>
               <p className="font-semibold text-gray-600 text-[0.68rem] leading-tight mt-0.5">
-                + 3 years full Scholarship
+                + 3-year full scholarship
               </p>
               <div className="h-px bg-gray-200 my-1.5" />
               <p className="font-bold text-gray-700 text-[0.75rem]">and be crowned</p>
@@ -149,17 +149,17 @@ export default function CampaignPoster() {
               style={{ background: "#FACC14", boxShadow: "3px 3px 0px #111" }}>
               <p className="font-bold text-black/50 text-[0.5rem] tracking-wide mb-0.5">Winner</p>
               <div className="flex items-baseline gap-1.5 mb-2">
-                <p className="font-black text-black leading-none text-[1.25rem]">₦500,000</p>
-                <p className="font-black text-black/80 leading-none text-[0.7rem]">+ 3yr Scholarship</p>
+                <p className="font-black text-black leading-none text-[1.25rem]">₦1,000,000</p>
+                <p className="font-black text-black/80 leading-none text-[0.7rem]">+ 3-year Scholarship</p>
               </div>
               <div className="grid grid-cols-2 gap-x-2 border-t border-black/20 pt-1.5">
                 <div>
                   <p className="font-bold text-black/50 text-[0.48rem] tracking-wide mb-0.5">1st Runner up</p>
-                  <p className="font-black text-black leading-none text-[1.05rem]">₦300,000</p>
+                  <p className="font-black text-black leading-none text-[1.05rem]">₦500,000</p>
                 </div>
                 <div>
                   <p className="font-bold text-black/50 text-[0.48rem] tracking-wide mb-0.5">2nd Runner up</p>
-                  <p className="font-black text-black leading-none text-[1.05rem]">₦200,000</p>
+                  <p className="font-black text-black leading-none text-[1.05rem]">₦300,000</p>
                 </div>
               </div>
             </div>

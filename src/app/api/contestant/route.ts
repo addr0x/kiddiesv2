@@ -116,8 +116,8 @@ function validateContestantRegistration({
   }
 
   const ageNumber = Number(age);
-  if (!Number.isSafeInteger(ageNumber) || ageNumber < 0 || ageNumber > 10) {
-    return "Age must be between 0 and 10.";
+  if (!Number.isSafeInteger(ageNumber) || ageNumber < 0 || ageNumber > 8) {
+    return "Age must be between 0 and 8.";
   }
 
   if (!isValidPhone(phone) || !isValidPhone(whatsapp)) {

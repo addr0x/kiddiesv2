@@ -27,7 +27,7 @@ export default function FacebookCover() {
         >
           <Image src="/logo.svg" alt="Logo" width={100} height={28} />
           <div className="rounded-full border-2 border-black bg-black px-4 py-1 font-black text-[#FACC14] text-[0.65rem] tracking-widest uppercase">
-            Ages 0–10 Years
+            Ages 0–8 Years
           </div>
         </div>
 
@@ -105,17 +105,17 @@ export default function FacebookCover() {
           >
             <p className="font-bold text-black/50 text-[0.55rem] tracking-wide mb-0.5">Winner</p>
             <div className="flex items-baseline gap-2 mb-2.5">
-              <p className="font-black text-black leading-none text-[1.5rem]">₦500,000</p>
+              <p className="font-black text-black leading-none text-[1.5rem]">₦1,000,000</p>
               <p className="font-black text-black/75 leading-none text-[0.85rem]">+ Scholarship</p>
             </div>
             <div className="grid grid-cols-2 gap-x-3 border-t border-black/20 pt-2">
               <div>
                 <p className="font-bold text-black/50 text-[0.52rem] tracking-wide mb-0.5">1st Runner up</p>
-                <p className="font-black text-black leading-none text-[1.2rem]">₦300,000</p>
+                <p className="font-black text-black leading-none text-[1.2rem]">₦500,000</p>
               </div>
               <div>
                 <p className="font-bold text-black/50 text-[0.52rem] tracking-wide mb-0.5">2nd Runner up</p>
-                <p className="font-black text-black leading-none text-[1.2rem]">₦200,000</p>
+                <p className="font-black text-black leading-none text-[1.2rem]">₦300,000</p>
               </div>
             </div>
           </div>

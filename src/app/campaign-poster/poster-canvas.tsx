@@ -319,9 +319,9 @@ export default function PosterCanvas({ data }: { data: PosterData }) {
             {/* Prize pills */}
             <div className="flex items-center gap-1 shrink-0">
               {[
-                { label: "1st", amount: "₦500k", scholar: true },
-                { label: "2nd", amount: "₦300k" },
-                { label: "3rd", amount: "₦200k" },
+                { label: "1st", amount: "₦1m", scholar: true },
+                { label: "2nd", amount: "₦500k" },
+                { label: "3rd", amount: "₦300k" },
               ].map(({ label, amount, scholar }) => (
                 <div
                   key={label}
@@ -338,7 +338,7 @@ export default function PosterCanvas({ data }: { data: PosterData }) {
                     style={{
                       color: scholar ? "rgba(0,0,0,0.5)" : "transparent",
                     }}>
-                    + 3yr scholar
+                    + 3-year scholar
                   </span>
                 </div>
               ))}
