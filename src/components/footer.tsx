@@ -17,6 +17,7 @@ const quickLinks = [
   { name: "All Contestants", link: "/contestants" },
   { name: "Leader Board", link: "/leader-board" },
   { name: "Register", link: "/register" },
+  { name: "Humanitarian", link: "/humanitarian" },
   { name: "Privacy Policy", link: "/privacy-policy" },
 ];
 

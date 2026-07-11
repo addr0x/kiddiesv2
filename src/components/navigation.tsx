@@ -11,6 +11,7 @@ const navigationLinks = [
   { name: "About", href: "/#about" },
   { name: "Contestants", href: "/contestants" },
   { name: "Leaderboard", href: "/leader-board" },
+  { name: "Humanitarian", href: "/humanitarian" },
   { name: "Privacy Policy", href: "/privacy-policy" },
 ];
 
