@@ -199,6 +199,23 @@ export default function VotingForm({
                 <FieldError>{errors.numberOfVotes?.message}</FieldError>
               </Field>
 
+              {/* WHY YOU PAY */}
+              <div className="rounded-xl bg-[#A855F7]/10 border-2 border-[#A855F7] px-4 py-3">
+                <p className="text-xs font-semibold text-[#6B21A8] leading-relaxed">
+                  Your ₦50 per vote goes beyond the contest — it helps put food on the
+                  table, books in the hands, and smiles on the faces of children and
+                  families in IDP camps across Nigeria. You&apos;re not just voting,
+                  you&apos;re changing lives.{" "}
+                  <a
+                    href="/humanitarian"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline font-bold hover:text-black transition-colors">
+                    See our impact →
+                  </a>
+                </p>
+              </div>
+
               {/* VOTING METHOD */}
               <Field>
                 <FieldLabel

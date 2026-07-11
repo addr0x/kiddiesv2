@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, HandHelping, Users, Video, Camera } from "lucide-react";
+import DonationButton from "./components/donation-wrapper";
 
 import pic1 from "./pictures/20230310_141551.jpg";
 import pic2 from "./pictures/20230310_141823.jpg";
@@ -192,17 +193,8 @@ export default function HumanitarianPage() {
             supplies to children who need it most. Partner with us to bring
             smiles to more faces.
           </p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 bg-[#FACC14] text-black font-bold text-sm px-7 py-3 rounded-full border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.3)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition">
-              Donate / Support
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white text-black font-bold text-sm px-7 py-3 rounded-full border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.3)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition">
-              Volunteer With Us
-            </Link>
+          <div className="flex justify-center">
+            <DonationButton />
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { recordVerifiedPaystackVote, VoteError } from "@/lib/votes";
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 function isValidSignature(signature: string | null, rawBody: string) {
@@ -17,6 +18,22 @@ function isValidSignature(signature: string | null, rawBody: string) {
     signatureBuffer.length === expectedBuffer.length &&
     timingSafeEqual(signatureBuffer, expectedBuffer)
   );
+}
+
+async function handleDonation(reference: string, amountInKobo: number) {
+  const tx = await prisma.donationTransaction.findUnique({
+    where: { reference },
+  });
+
+  if (!tx || tx.status === "processed") return;
+
+  const amountPaid = Math.floor(amountInKobo / 100);
+  if (amountPaid !== tx.amount) return;
+
+  await prisma.donationTransaction.update({
+    where: { reference },
+    data: { status: "processed", processedAt: new Date() },
+  });
 }
 
 export async function POST(request: NextRequest) {
@@ -48,12 +65,16 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    await recordVerifiedPaystackVote({
-      reference,
-      amountInKobo: amount,
-      customerEmail,
-      currency,
-    });
+    if (reference.startsWith("don_")) {
+      await handleDonation(reference, amount);
+    } else {
+      await recordVerifiedPaystackVote({
+        reference,
+        amountInKobo: amount,
+        customerEmail,
+        currency,
+      });
+    }
   } catch (error) {
     if (error instanceof VoteError) {
       return NextResponse.json({ error: error.message }, { status: error.status });

@@ -63,6 +63,18 @@ model PaystackTransaction {
   processedAt    DateTime?
 }
 
+model DonationTransaction {
+  reference   String        @id @map("_id")
+  amount      Int
+  donorName   String?
+  email       String?
+  phone       String?
+  message     String?
+  status      PaymentStatus @default(pending)
+  createdAt   DateTime      @default(now())
+  processedAt DateTime?
+}
+
 model Counter {
   key   String @id @map("_id")
   value Int
