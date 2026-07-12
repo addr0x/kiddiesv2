@@ -1,3 +1,4 @@
+import { cache } from "react";
 import Countdown from "./components/countdown";
 import HowToVote from "./components/how-to-vote";
 import NoUserFound from "./components/not-found";
@@ -15,55 +16,58 @@ interface ContestantPageParams {
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.leadritehub.com";
 
-async function fetchContestant(contestantId: string) {
-  const contestant = await prisma.contestant.findUnique({
-    where: { contestantId, disabled: false },
-    select: {
-      contestantId: true,
-      firstName: true,
-      lastName: true,
-      stage1vote: true,
-      stage2vote: true,
-      stage3vote: true,
-      gender: true,
-      age: true,
-      bio: true,
-      picture: true,
-      videoUrl: true,
-      disabled: true,
-      voteLogs: {
-        orderBy: { createdAt: "desc" },
-        take: 10,
-        select: {
-          id: true,
-          voterName: true,
-          amount: true,
-          numberOfVotes: true,
-          voteMethod: true,
-          createdAt: true,
-          keepAnonymous: true,
+const fetchContestant = cache(async function fetchContestant(contestantId: string) {
+  const [contestant, config] = await Promise.all([
+    prisma.contestant.findUnique({
+      where: { contestantId, disabled: false },
+      select: {
+        contestantId: true,
+        firstName: true,
+        lastName: true,
+        stage1vote: true,
+        stage2vote: true,
+        stage3vote: true,
+        gender: true,
+        age: true,
+        bio: true,
+        picture: true,
+        videoUrl: true,
+        disabled: true,
+        voteLogs: {
+          orderBy: { createdAt: "desc" },
+          take: 10,
+          select: {
+            id: true,
+            voterName: true,
+            amount: true,
+            numberOfVotes: true,
+            voteMethod: true,
+            createdAt: true,
+            keepAnonymous: true,
+          },
         },
       },
-    },
-  });
+    }),
+    getContestConfig(),
+  ]);
 
   if (!contestant) return null;
 
-  const config = await getContestConfig();
   const field = stageVoteField(config.currentStage);
   const contestantCurrentVotes = contestant[field] ?? 0;
 
-  const position =
-    (await prisma.contestant.count({
+  const [positionResult, preceding] = await Promise.all([
+    prisma.contestant.count({
       where: { [field]: { gt: contestantCurrentVotes }, disabled: false },
-    })) + 1;
+    }),
+    prisma.contestant.findFirst({
+      where: { [field]: { gt: contestantCurrentVotes }, disabled: false },
+      orderBy: { [field]: "asc" },
+      select: { stage1vote: true, stage2vote: true, stage3vote: true },
+    }),
+  ]);
 
-  const preceding = await prisma.contestant.findFirst({
-    where: { [field]: { gt: contestantCurrentVotes }, disabled: false },
-    orderBy: { [field]: "asc" },
-    select: { stage1vote: true, stage2vote: true, stage3vote: true },
-  });
-
+  const position = positionResult + 1;
   const precedingVotes = preceding ? preceding[field] : null;
   const voteDifference =
     precedingVotes !== null ? precedingVotes - contestantCurrentVotes : null;
@@ -78,7 +82,7 @@ async function fetchContestant(contestantId: string) {
     position,
     voteDifference,
   };
-}
+});
 
 export async function generateMetadata({
   params,

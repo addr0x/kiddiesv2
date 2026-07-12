@@ -110,10 +110,10 @@ export default function VotingForm({
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="sm:max-w-106.25 border-2 border-black shadow-[6px_6px_0px_#111]">
+        <DialogContent className="sm:max-w-106.25 border-2 border-black shadow-[6px_6px_0px_#111] max-h-[90vh] overflow-y-auto">
           <DialogHeader className="space-y-2">
             <DialogTitle className="font-bold text-black text-xl">
-              Vote for <span className="text-[#A855F7]">{name}</span>
+              Vote for <span className="text-black">{name}</span>
             </DialogTitle>
             <DialogDescription>
               Help <span className="font-bold">{contestant.name}</span> get{" "}
@@ -150,68 +150,64 @@ export default function VotingForm({
                   </span>
                 </FieldLabel>
 
-                {!isVotingOpen ? (
-                  <p className="text-sm font-semibold text-gray-500 border-2 border-black rounded-xl px-3 py-2 bg-gray-50">
-                    Voting is currently closed
-                  </p>
-                ) : (
-                  <Controller
-                    name="numberOfVotes"
-                    control={control}
-                    rules={{ required: "Please select a vote pack" }}
-                    render={({ field }) => (
-                      <div className="grid grid-cols-2 gap-2">
-                        {VOTE_BUNDLES.map((bundle) => {
-                          const selected = field.value === String(bundle.votes);
-                          return (
-                            <button
-                              key={bundle.votes}
-                              type="button"
-                              onClick={() =>
-                                field.onChange(String(bundle.votes))
-                              }
-                              className={`relative rounded-xl border-2 p-3 text-left transition-all ${
-                                selected
-                                  ? "border-black bg-[#FACC14] shadow-[3px_3px_0px_#111]"
-                                  : "border-black/20 hover:border-black bg-white"
-                              } ${bundle.highlight ? "ring-2 ring-[#A855F7] ring-offset-1" : ""}`}>
-                              {bundle.highlight && (
-                                <span className="absolute -top-2 right-2 text-[10px] font-bold bg-[#A855F7] text-white px-2 py-0.5 rounded-full border border-[#A855F7]">
-                                  Popular
-                                </span>
-                              )}
-                              <p className="font-bold text-sm text-black">
-                                {bundle.label}
-                              </p>
-                              <p className="text-lg font-black text-black">
-                                {bundle.votes} votes
-                              </p>
-                              <p className="text-xs text-gray-500 font-semibold">
-                                ₦{bundle.price.toLocaleString()}
-                              </p>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  />
-                )}
+{!isVotingOpen ? (
+                    <p className="text-sm font-semibold text-gray-500 border-2 border-black rounded-xl px-3 py-2 bg-gray-50">
+                      Voting is currently closed
+                    </p>
+                  ) : (
+                    <Controller
+                      name="numberOfVotes"
+                      control={control}
+                      rules={{ required: "Please select a vote pack" }}
+                      render={({ field }) => (
+                        <div className="grid grid-cols-2 gap-2">
+                          {VOTE_BUNDLES.map((bundle) => {
+                            const selected = field.value === String(bundle.votes);
+                            return (
+                              <button
+                                key={bundle.votes}
+                                type="button"
+                                onClick={() =>
+                                  field.onChange(String(bundle.votes))
+                                }
+                                className={`relative rounded-xl border-2 p-2 text-left transition-all ${
+                                  selected
+                                    ? "border-black bg-[#FACC14] shadow-[3px_3px_0px_#111]"
+                                    : "border-black/20 hover:border-black bg-white"
+                                } ${bundle.highlight ? "ring-2 ring-[#FACC14] ring-offset-1" : ""}`}>
+                                {bundle.highlight && (
+                                  <span className="absolute -top-2 right-2 text-[10px] font-bold bg-[#FACC14] text-black px-2 py-0.5 rounded-full border border-[#FACC14]">
+                                    Popular
+                                  </span>
+                                )}
+                                <p className="text-lg font-black text-black">
+                                  {bundle.votes} votes
+                                </p>
+                                <p className="text-xs text-gray-500 font-semibold">
+                                  ₦{bundle.price.toLocaleString()}
+                                </p>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    />
+                  )}
                 <FieldError>{errors.numberOfVotes?.message}</FieldError>
               </Field>
 
               {/* WHY YOU PAY */}
-              <div className="rounded-xl bg-[#A855F7]/10 border-2 border-[#A855F7] px-4 py-3">
-                <p className="text-xs font-semibold text-[#6B21A8] leading-relaxed">
-                  Your ₦50 per vote goes beyond the contest — it helps put food on the
-                  table, books in the hands, and smiles on the faces of children and
-                  families in IDP camps across Nigeria. You&apos;re not just voting,
-                  you&apos;re changing lives.{" "}
+              <div className="rounded-xl border-2 border-black/20 bg-black/5 px-3 py-2">
+                <p className="text-xs font-semibold text-gray-600 leading-relaxed">
+                  Your ₦50 per vote funds our humanitarian outreach to IDP camps across
+                  Nigeria — food, school supplies, and medical aid for children and
+                  families.{" "}
                   <a
                     href="/humanitarian"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline font-bold hover:text-black transition-colors">
-                    See our impact →
+                    Learn more →
                   </a>
                 </p>
               </div>

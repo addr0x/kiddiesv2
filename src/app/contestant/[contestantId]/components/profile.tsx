@@ -251,7 +251,7 @@ export default function Profile({ contestant, isVotingOpen }: contestantProps) {
             {contestant.name}
           </h1>
           <div className="flex items-center gap-3 mt-2 flex-wrap">
-            <span className="bg-[#A855F7] text-white font-bold text-xs px-3 py-1 rounded-full border-2 border-[#A855F7]">
+            <span className="bg-black text-[#FACC14] font-bold text-xs px-3 py-1 rounded-full border-2 border-black">
               {capitalize(contestant.gender)}
             </span>
             <span className="bg-[#22C55E] text-white font-bold text-xs px-3 py-1 rounded-full border-2 border-[#22C55E]">
@@ -415,7 +415,7 @@ export default function Profile({ contestant, isVotingOpen }: contestantProps) {
                 href={contestant.videoUrl!}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 font-bold text-sm underline underline-offset-4 text-[#A855F7] hover:opacity-70 transition">
+                className="mt-4 inline-flex items-center gap-2 font-bold text-sm underline underline-offset-4 text-[#FACC14] hover:opacity-70 transition">
                 Watch {contestant.name}&apos;s video →
               </a>
             );
