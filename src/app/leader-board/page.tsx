@@ -29,15 +29,13 @@ function LeaderBoardComingShortly() {
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
-          >
+            className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
             <ArrowLeft className="size-4" />
             Back Home
           </Link>
           <Link
             href="/register"
-            className="inline-flex items-center rounded-xl border-2 border-black bg-[#FACC14] px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
-          >
+            className="inline-flex items-center rounded-xl border-2 border-black bg-[#FACC14] px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
             Register
           </Link>
         </div>
@@ -91,7 +89,7 @@ export default async function LeaderBoardPage() {
             <span>Leader Board</span>
           </h2>
           <p className="text-gray-600 font-semibold text-sm">
-            The best performing contestnants
+            The best performing contestants
           </p>
         </div>
       </div>
