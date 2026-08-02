@@ -35,6 +35,10 @@ type BankTransferVote = {
   voterName?: string;
 };
 
+type AdminVote = BankTransferVote & {
+  voteMethod: "paystack" | "bank_tx";
+};
+
 function isUniqueConstraintError(error: unknown) {
   return (
     error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -74,6 +78,7 @@ async function recordVote({
   keepAnonymous,
   reference,
   requireVotingOpen = true,
+  requirePaystackReference = true,
 }: {
   contestantId: string;
   amountPaid: number;
@@ -84,6 +89,7 @@ async function recordVote({
   keepAnonymous?: boolean;
   reference?: string;
   requireVotingOpen?: boolean;
+  requirePaystackReference?: boolean;
 }): Promise<VoteResult> {
   const config = await getContestConfig();
   if (requireVotingOpen && !config.votingOpen) {
@@ -95,7 +101,7 @@ async function recordVote({
   try {
     const result = await prisma.$transaction(
       async (tx) => {
-        if (voteMethod === "paystack") {
+        if (voteMethod === "paystack" && requirePaystackReference) {
           if (!reference) {
             throw new VoteError("Payment reference is required", 400);
           }
@@ -248,5 +254,25 @@ export async function recordBankTransferVote({
     votesToAdd: assertVotingAmount(amount),
     voteMethod: "bank_tx",
     voterName,
+  });
+}
+
+export async function recordAdminVote({
+  contestantId,
+  amount,
+  voterName,
+  voteMethod,
+}: AdminVote) {
+  if (!Number.isSafeInteger(amount) || amount < COST_PER_VOTE) {
+    throw new VoteError("Invalid amount", 400);
+  }
+
+  return recordVote({
+    contestantId,
+    amountPaid: amount,
+    votesToAdd: assertVotingAmount(amount),
+    voteMethod,
+    voterName,
+    requirePaystackReference: false,
   });
 }

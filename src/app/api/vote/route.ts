@@ -1,6 +1,7 @@
 import { isAdminSession } from "@/lib/admin-auth";
 import { verifyPaystackTransaction } from "@/lib/paystack";
 import {
+  recordAdminVote,
   recordBankTransferVote,
   recordVerifiedPaystackVote,
   VoteError,
@@ -50,22 +51,28 @@ export async function POST(request: NextRequest) {
       }
 
       return NextResponse.json(result.contestant);
-    } else if (voteMethod === "bank_tx") {
+    } else if (voteMethod === "bank_tx" || voteMethod === "admin_paystack") {
       if (!(await isAdminSession())) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
 
-      const result = await recordBankTransferVote({
+      const input = {
         contestantId,
         amount: Number(data.amount),
         voterName,
-      });
+      };
+      const result = voteMethod === "admin_paystack"
+        ? await recordAdminVote({ ...input, voteMethod: "paystack" })
+        : await recordBankTransferVote(input);
 
       if (result.alreadyProcessed) {
         return NextResponse.json({ alreadyProcessed: true });
       }
 
-      return NextResponse.json(result.contestant);
+      return NextResponse.json({
+        ...result.contestant,
+        numberOfVotes: Math.floor(input.amount / 50),
+      });
     } else {
       return NextResponse.json({ error: "Invalid vote method" }, { status: 400 });
     }

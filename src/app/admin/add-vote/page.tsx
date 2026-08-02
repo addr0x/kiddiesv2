@@ -25,7 +25,19 @@ interface IFormInput {
   amount: number;
 }
 
-export default function AddVote() {
+type VoteFormProps = {
+  title: string;
+  description: string;
+  voteMethod: "bank_tx" | "admin_paystack";
+  submitLabel: string;
+};
+
+function VoteForm({
+  title,
+  description,
+  voteMethod,
+  submitLabel,
+}: VoteFormProps) {
   const [addVoteError, setAddVoteError] = useState<boolean>(false);
 
   const {
@@ -40,31 +52,31 @@ export default function AddVote() {
   });
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    setAddVoteError(false);
     const response = await fetch("/api/vote", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, voteMethod: "bank_tx" }),
+      body: JSON.stringify({ ...data, voteMethod }),
     });
 
     const vote = await response.json();
-    console.log(vote);
 
     if (!response.ok) {
       setAddVoteError(true);
+      toast.error(vote.error ?? "Unable to process this request.");
     } else {
       toast.success("Request was successful", {
-        description: `${vote.numberOfVotes} votes was added for contestant ${vote.contestantId}`,
+        description: `${vote.numberOfVotes} votes were added for contestant ${vote.contestantId}`,
       });
       reset();
     }
   };
 
   return (
-    <div className="fb-col-wrapper min-h-dvh grid place-items-center">
-      <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Add votes</CardTitle>
-          <CardDescription>Fill out the form correctly</CardDescription>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -93,6 +105,11 @@ export default function AddVote() {
                 <Input
                   {...register("amount", {
                     required: "Amount is required",
+                    valueAsNumber: true,
+                    min: {
+                      value: 50,
+                      message: "Amount must be at least ₦50",
+                    },
                   })}
                   type="number"
                   placeholder="3000"
@@ -114,7 +131,7 @@ export default function AddVote() {
 
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting && <Spinner />}
-                Add vote
+                {submitLabel}
               </Button>
             </div>
           </form>
@@ -131,7 +148,25 @@ export default function AddVote() {
             </AlertDescription>
           </Alert>
         )}
-      </Card>
+    </Card>
+  );
+}
+
+export default function AddVote() {
+  return (
+    <div className="fb-col-wrapper min-h-dvh px-4 py-10 flex flex-wrap items-center justify-center gap-6">
+      <VoteForm
+        title="Add bank transfer votes"
+        description="Record a payment received by bank transfer"
+        voteMethod="bank_tx"
+        submitLabel="Add bank transfer vote"
+      />
+      <VoteForm
+        title="Add Paystack votes"
+        description="Record a payment received through Paystack"
+        voteMethod="admin_paystack"
+        submitLabel="Add Paystack vote"
+      />
     </div>
   );
 }
