@@ -138,7 +138,7 @@ export default function HeroPage() {
           Register your child, campaign to gather votes, and watch them compete
           for a{" "}
           <strong className="text-black">
-            ₦1,000,000 in cash prizes + 3-year scholarship
+            ₦500,000 in cash prizes + 3-year scholarship
           </strong>{" "}
           in MyChild&I Contest for ages 0 to 8 years.
         </p>
