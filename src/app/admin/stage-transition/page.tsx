@@ -24,6 +24,7 @@ import {
   AlertDialogTrigger,
 } from "@ui/alert-dialog";
 import { Spinner } from "@ui/spinner";
+import { STAGE_REQUIREMENTS } from "@/utils/vote-milestones";
 
 type Config = {
   currentStage: number;
@@ -37,7 +38,7 @@ type PreviewResult = {
 
 export default function StageTransitionPage() {
   const [config, setConfig] = useState<Config | null>(null);
-  const [threshold, setThreshold] = useState<number>(300);
+  const [threshold, setThreshold] = useState<number>(STAGE_REQUIREMENTS[1]);
   const [preview, setPreview] = useState<PreviewResult>(null);
   const [loading, setLoading] = useState(false);
   const [previewing, setPreviewing] = useState(false);

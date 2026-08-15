@@ -10,6 +10,7 @@ import {
   getEarnedMilestones,
   getNextMilestone,
   MILESTONES,
+  STAGE_REQUIREMENTS,
 } from "@/utils/vote-milestones";
 import { useEffect, useRef, useState } from "react";
 import { ShowVoteSuccess } from "./voting-success";
@@ -54,10 +55,6 @@ type contestantProps = {
     appUrl?: string;
   };
   isVotingOpen: boolean;
-};
-
-const STAGE_REQUIREMENTS: Record<number, number> = {
-  1: 300,
 };
 
 function ageSpotlight(name: string, age: string) {
