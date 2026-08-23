@@ -6,7 +6,7 @@ import { ArrowLeft, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const SHOW_COMING_SHORTLY = false;
+const SHOW_COMING_SHORTLY = true;
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://kidscrown.net";
 
 const ACCENT_COLORS = [
@@ -26,14 +26,13 @@ async function ContestantsComingShortly() {
           <Sparkles className="size-8" />
         </div>
         <span className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-[#FACC14] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-black">
-          Meet the Stars
+          Contest Update
         </span>
         <h2 className="mx-auto mt-4 max-w-xl font-bold text-black text-[clamp(2rem,4vw,3.25rem)] leading-tight">
-          Contestants Coming Shortly
+          The Final Will Resume Shortly
         </h2>
         <p className="mt-3 text-base font-semibold leading-relaxed text-gray-600">
-          We are getting the contestant showcase ready. Check back shortly to
-          meet the young stars and visit their voting profiles.
+          We&apos;ll be back soon. Thank you for your patience.
         </p>
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
           <Link
