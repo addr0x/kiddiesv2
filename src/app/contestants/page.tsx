@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getContestConfig, stageVoteField } from "@/lib/contest-config";
 import { capitalize } from "@/utils/capitalize";
 import { contestantImageSrc } from "@/utils/contestant-image";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowLeft, Crown, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://kidscrown.net";
 
 const ACCENT_COLORS = [
   "bg-[#FACC14]",
-  "bg-[#A855F7]",
+  "bg-[#38BDF8]",
   "bg-[#22C55E]",
   "bg-[#FB923C]",
 ];
@@ -20,32 +20,45 @@ const PAGE_SIZE = 12;
 
 async function ContestantsComingShortly() {
   return (
-    <section className="fb-col-wrapper flex min-h-[calc(100vh-7rem)] items-center justify-center pt-28 pb-16">
-      <div className="mx-auto max-w-2xl text-center">
-        <div className="mx-auto mb-5 grid size-16 place-items-center rounded-2xl border-2 border-black bg-black text-[#FACC14] shadow-[4px_4px_0px_#FACC14]">
-          <Sparkles className="size-8" />
-        </div>
-        <span className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-[#FACC14] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-black">
-          Contest Update
-        </span>
-        <h2 className="mx-auto mt-4 max-w-xl font-bold text-black text-[clamp(2rem,4vw,3.25rem)] leading-tight">
-          The Final Will Resume Shortly
-        </h2>
-        <p className="mt-3 text-base font-semibold leading-relaxed text-gray-600">
-          We&apos;ll be back soon. Thank you for your patience.
-        </p>
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
-            <ArrowLeft className="size-4" />
-            Back Home
-          </Link>
-          <Link
-            href="/register"
-            className="inline-flex items-center rounded-xl border-2 border-black bg-[#FACC14] px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
-            Register
-          </Link>
+    <section className="fb-col-wrapper min-h-[calc(100vh-4rem)] items-center bg-[#FFF9E5] pt-28 pb-20">
+      <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-[2rem] border-[3px] border-black bg-white shadow-[8px_8px_0px_#111]">
+        <div className="h-3 border-b-[3px] border-black bg-[#FACC14]" />
+
+        <div className="flex flex-col items-center px-7 py-12 text-center sm:px-14 sm:py-16">
+          <div className="mb-6 grid size-16 place-items-center rounded-2xl bg-black text-[#FACC14]">
+            <Crown className="size-8" strokeWidth={2} />
+          </div>
+
+          <span className="inline-flex items-center gap-2 rounded-full border-2 border-black bg-[#FFF4B8] px-4 py-2 text-xs font-black uppercase tracking-[0.12em] text-black">
+            <span className="size-2.5 rounded-full bg-[#22C55E] ring-2 ring-black" />
+            The Final Is Underway
+          </span>
+
+          <h2 className="mt-6 text-[clamp(2.5rem,6vw,4.5rem)] font-bold leading-none tracking-[-0.03em] text-black">
+            Finalists Coming Soon
+          </h2>
+
+          <p className="mt-5 max-w-[48ch] text-base font-semibold leading-relaxed text-gray-600 sm:text-lg">
+            The final has begun! The official list of finalists will be available
+            here shortly. Please check back soon.
+          </p>
+
+          <div className="mt-8 h-px w-16 bg-black/20" />
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/leaderboard"
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-[#FACC14] px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
+              View Leaderboard
+              <Sparkles className="size-4" />
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-white px-5 py-3 text-sm font-bold text-black transition hover:bg-black hover:text-white">
+              <ArrowLeft className="size-4" />
+              Back Home
+            </Link>
+          </div>
         </div>
       </div>
     </section>
