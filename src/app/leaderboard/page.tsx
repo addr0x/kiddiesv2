@@ -24,7 +24,7 @@ export default async function LeaderboardPage() {
       picture: true,
     },
     orderBy: { [field]: "desc" },
-    take: 3,
+    take: 5,
   });
   const topContestants: LeaderboardContestant[] = rawContestants.map(
     (contestant) => ({
@@ -55,6 +55,14 @@ export default async function LeaderboardPage() {
 
       <div className="mt-8">
         <LeaderboardClient appUrl={APP_URL} initial={topContestants} />
+      </div>
+
+      <div className="mt-10 flex justify-end">
+        <button
+          type="button"
+          className="rounded-xl border-2 border-black bg-[#FACC14] px-6 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
+          Next →
+        </button>
       </div>
     </section>
   );
