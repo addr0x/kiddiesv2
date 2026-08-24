@@ -5,19 +5,19 @@ import Link from "next/link";
 const prizes = [
   {
     rank: "🏆 Grand Winner",
-    prize: "₦500,000 + 3-year Scholarship",
+    prize: "₦300,000 + 3-year Scholarship",
     className:
       "bg-[#FACC14] text-black border-2 border-black shadow-[3px_3px_0px_#111]",
   },
   {
     rank: "🥈 1st Runner Up",
-    prize: "₦300,000",
+    prize: "₦200,000",
     className:
       "bg-[#A855F7] text-white border-2 border-[#A855F7] shadow-[3px_3px_0px_#7E22CE]",
   },
   {
     rank: "🥉 2nd Runner Up",
-    prize: "₦200,000",
+    prize: "₦100,000",
     className:
       "bg-[#22C55E] text-white border-2 border-[#22C55E] shadow-[3px_3px_0px_#15803D]",
   },

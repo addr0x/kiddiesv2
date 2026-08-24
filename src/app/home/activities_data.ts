@@ -20,6 +20,6 @@ export const activities = [
   },
 
   {
-    name: 'Win', details: "Winners will be crowned The Future Star and awarded ₦1,800,000 in cash prizes + school scholarship.", image: asset4
+    name: 'Win', details: "Winners will be crowned The Future Star and awarded ₦600,000 in cash prizes + school scholarship.", image: asset4
   },
 ];
