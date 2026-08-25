@@ -47,7 +47,7 @@ async function ContestantsComingShortly() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/leaderboard"
+              href="/leader-board"
               className="inline-flex items-center gap-2 rounded-xl border-2 border-black bg-[#FACC14] px-5 py-3 text-sm font-bold text-black shadow-[3px_3px_0px_#111] transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none">
               View Leaderboard
               <Sparkles className="size-4" />
