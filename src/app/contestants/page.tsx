@@ -6,7 +6,7 @@ import { ArrowLeft, Crown, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const SHOW_COMING_SHORTLY = true;
+const SHOW_COMING_SHORTLY = false;
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://kidscrown.net";
 
 const ACCENT_COLORS = [
